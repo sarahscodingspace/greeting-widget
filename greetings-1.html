@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good Evening</title>
+    <title>Dynamic Greeting</title>
     <style>
         body {
             background-color: #191919;
@@ -17,10 +17,10 @@
             font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #FFD700;
+            color: #d3bb7d;
         }
         .date {
-            color: 	#434ca8;
+            color: #434ca8;
             font-size: 1.2em;
             margin-bottom: 5px;
         }
@@ -32,8 +32,53 @@
     </style>
 </head>
 <body>
-    <div class="greeting">Good Evening</div>
-    <div class="date">Wednesday, July 16, 2025</div>
-    <div class="time">10:40:01 PM</div>
+    <div class="greeting" id="greeting">Good Evening</div>
+    <div class="date" id="date">Wednesday, July 16, 2025</div>
+    <div class="time" id="time">10:40:01 PM</div>
+
+    <script>
+        function updateGreeting() {
+            const now = new Date();
+            const hours = now.getHours();
+            
+            // Determine greeting based on time
+            let greeting;
+            if (hours < 12) {
+                greeting = "Good Morning";
+            } else if (hours < 17) {
+                greeting = "Good Afternoon";
+            } else {
+                greeting = "Good Evening";
+            }
+            
+            // Format date
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString('en-US', options);
+            
+            // Format time
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+            
+            // Update the DOM
+            document.getElementById('greeting').textContent = greeting;
+            document.getElementById('date').textContent = dateString;
+            document.getElementById('time').textContent = timeString;
+        }
+        
+        // Update immediately when page loads
+        updateGreeting();
+        
+        // Update every second
+        setInterval(updateGreeting, 1000);
+    </script>
 </body>
 </html>
